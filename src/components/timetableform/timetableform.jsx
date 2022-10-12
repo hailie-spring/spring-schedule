@@ -1,73 +1,64 @@
-import { View,  Picker, Form, Button } from '@tarojs/components'
+import { View, Picker, Form, Button } from '@tarojs/components'
 import { AtList, AtListItem } from 'taro-ui';
 import React, { useEffect, useState, useCallback } from "react";
 import Taro from '@tarojs/taro';
 import { AtDivider } from 'taro-ui';
+import { MyMessage } from '../mymessage/mymessage';
 import './timetableform.scss';
 
 export function TimetableForm(props) {
-    const {timetables, setTimetables, dayofweek, courses, tag} = props;
-    const [time, setTime] = useState(props.timetables[props.dayofweek].length !== 0 ? props.timetables[props.dayofweek][0].time : '');
-    const [courseName, setCourseName] = useState(props.timetables[props.dayofweek].length !== 0 ? props.timetables[props.dayofweek][0].course : '');
+    const { timetables, setTimetables, dayofweek, courses, tag, keys } = props;
+    const [time, setTime] = useState(keys.length !== 0 ? keys.sort()[0] : '');
+    const [courseName, setCourseName] = useState(keys.length !== 0 ? timetables[dayofweek][keys.sort()[0]].course : '');
     const [disabled, setDisabled] = useState(false);
-    const [length, setLength] = useState(timetables[dayofweek].length);
-
+    const [length, setLength] = useState(keys.length);
+    const [message, setMessage] = useState({
+        content: '',
+        type: 'info',
+        duration: 3000,
+        isOpened: false
+    });
+     
     useEffect(() => {
-        if (length >= 3) {
+        if (length >= 12) {
             setDisabled(true);
+            // setMessage({ ...message, content: '一天最多只能增加12门课程', isOpened: true, type: 'error' });
         } else {
             setDisabled(false);
         }
     }, [length]);
 
     useEffect(() => {
-        setTime(timetables[dayofweek].length !== 0 ? timetables[props.dayofweek][0].time : '');
-        setCourseName(timetables[dayofweek].length !== 0 ? timetables[props.dayofweek][0].course : '');
-        setLength(timetables[dayofweek].length);
-    }, [timetables]);
+        setTime(keys.length !== 0 ? keys[0] : '');
+        setCourseName(keys.length !== 0 ? timetables[dayofweek][keys[0]].course : '');
+        setLength(keys.length);
+    }, [keys]);
 
     function handleSubmit(event) {
         const newTimetable = JSON.parse(JSON.stringify(timetables));
-        if (!time || !courseName) {
+        if (!time) {
+            setMessage({ ...message, content: '请先选择课程时间', isOpened: true, type: 'error' });
             return;
         }
+        if (!courseName) {
+            setMessage({ ...message, content: '请先选择课程名字', isOpened: true, type: 'error' });
+            return;
+        }
+        const timetable = newTimetable[dayofweek];
         if (tag === 'delete') {
-            let index = -1;
-            let targetIndex = -1;
-            for (const item of newTimetable[dayofweek]) {
-                index += 1;
-                if (item.time === time && item.course === courseName) {
-                    targetIndex = index;
-                    break;
-                }
+            if (!(time in timetable) || timetable[time].course !== courseName) {
+                setMessage({ ...message, content: '只能删除已经存在的课表', isOpened: true, type: 'error' });
+                return;
             }
-            if (targetIndex !== -1) {
-                newTimetable[dayofweek].splice(targetIndex, 1);
-            }
+            delete timetable[time];
         } else {
-            let exist = false;
-            for (const item of newTimetable[props.dayofweek]) {
-                if (item.time === time && item.course === courseName) {
-                    exist = true;
-                    break;
-                } else if (item.time === time && item.course !== courseName) {
-                    exist = true;
-                    item.course = courseName;
-                    break;
-                }
-            }
-            if (!exist) {
-                newTimetable[dayofweek].push({
-                    time,
-                    course: courseName
-                })
+            timetable[time] = {
+                course: courseName
             }
         }
-        newTimetable[props.dayofweek].sort(function (first, second) {
-            return first.time[1] - second.time[1];
-        });
+        newTimetable[dayofweek] = timetable;
         setTimetables(newTimetable);
-        Taro.setStorageSync('timetable-info', JSON.stringify(timetables));
+        Taro.setStorageSync('timetable-info', JSON.stringify(newTimetable));
     }
 
     return (
@@ -102,10 +93,11 @@ export function TimetableForm(props) {
                         </Picker>
                     </View>
                 </View>
-                <Button style={{backgroundColor: '#6190E8', color: 'white'}}  size='default' formType='submit' disabled={disabled} onClick={handleSubmit}>
+                <Button style={{ backgroundColor: disabled ? 'grey' : '#6190E8', color: 'white' }} size='default' formType='submit' disabled={disabled} onClick={handleSubmit}>
                     {tag === 'delete' ? '删除' : '更新'}
                 </Button>
             </Form>
+            <MyMessage duration={message.duration} isOpened={message.isOpened} message={message.content} onClose={() => { setMessage({ ...message, isOpened: false }) }} type={message.type}></MyMessage>
         </View>
     );
 }

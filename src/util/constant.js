@@ -19,40 +19,70 @@ export const DAY_OF_WEEK_CHINESE = {
 }
 
 export const DEFAULT_TIMETABLES = {
-    monday: [
-        {
-            time: '16:40',
+    monday: {
+        '16:40': {
             course: '写字'
         }
-
-    ],
-    tuesday: [],
-    wednesday: [
-        {
-            time: '16:50',
+    },
+    tuesday: {},
+    wednesday: {
+        '16:50': {
             course: '啦啦操'
         }
-    ],
-    thursday: [
-        {
-            time: '16:50',
+    },
+    thursday: {
+        '16:50': {
             course: '画画'
         }
-    ],
-    friday: [
-        {
-            time: '18:40',
+    },
+    friday: {
+        '18:40': {
             course: '乐高'
         }
-    ],
-    saturday: [
-        {
-            time: '10:10',
+    },
+    saturday: {
+        '10:10': {
             course: '拼音'
         }
-    ],
-    sunday: [],
+    },
+    sunday: {},
 }
+
+// export const DEFAULT_TIMETABLES = {
+//     monday: [
+//         {
+//             time: '16:40',
+//             course: '写字'
+//         }
+
+//     ],
+//     tuesday: [],
+//     wednesday: [
+//         {
+//             time: '16:50',
+//             course: '啦啦操'
+//         }
+//     ],
+//     thursday: [
+//         {
+//             time: '16:50',
+//             course: '画画'
+//         }
+//     ],
+//     friday: [
+//         {
+//             time: '18:40',
+//             course: '乐高'
+//         }
+//     ],
+//     saturday: [
+//         {
+//             time: '10:10',
+//             course: '拼音'
+//         }
+//     ],
+//     sunday: [],
+// }
 
 export const DEFAULT_COURSES = {
     '写字': {

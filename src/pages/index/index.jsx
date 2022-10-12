@@ -33,26 +33,6 @@ function index() {
 
     return (
         <View className='overview-row'>
-            {/* {
-                days.map((item, index) => (
-                    <View key={`view-${prefix}-${index}`} onClick={() => {
-                        Taro.navigateTo({
-                            url: '/pages/days/days'
-                        });
-                    }}>
-                        <Text className="name">{item}</Text>
-                    </View>
-                ))
-            } */}
-            {/* <AtCard
-                title='欢迎来到spring课程管理'
-                note={generateTodayTips()}
-            >
-                <AtTimeline
-                    items={timelines}
-                >
-                </AtTimeline>
-            </AtCard> */}
             <CourseTimeline timelines={timelines} note={generateTodayTips()}></CourseTimeline>
             <AtDivider>
                 <AtIcon value='calendar'></AtIcon>

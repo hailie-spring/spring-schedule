@@ -4,7 +4,7 @@ import { AtSegmentedControl } from 'taro-ui';
 import { Picker, View, Text } from '@tarojs/components';
 import { AtList, AtListItem } from 'taro-ui';
 import { AtDivider } from 'taro-ui';
-import { getInitialCourses } from "../../util/utils";
+import { getInitialCourses, getInitialTimetables } from "../../util/utils";
 import { CourseForm } from "../../components/courseform/courseform";
 import { CourseSignIn } from "../../components/coursesignin/coursesignin";
 import { MyMessage } from "../../components/mymessage/mymessage";
@@ -15,6 +15,7 @@ function courses(props) {
     const [current, setCurrent] = useState(0);
     const [courseName, setCourseName] = useState('');
     const [courses, setCourses] = useState(getInitialCourses());
+    const [timetables, setTimetables] = useState(getInitialTimetables());
     const [length, setLength] = useState(Object.keys(courses).length);
     const [courseNames, setCourseNames] = useState(Object.keys(courses));
     const { name } = Taro.getCurrentInstance().router.params;
@@ -43,12 +44,13 @@ function courses(props) {
             length={length}
             message={message}
             setMessage={setMessage}
+            timetables={timetables}
+            setTimetables={setTimetables}
             tag={tag}></CourseForm>
     }, [current, courses, setCourses, courseName, setCourseName, length]);
 
     return (
         <View className='container'>
-
             <View className='page-body'>
                 <View className='page-section'>
                     <AtDivider content={courseName ? `已选${courseName}课程` : '请先选择课程'} />

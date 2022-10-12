@@ -5,7 +5,7 @@ import { MyInput } from '../myinput/myinput';
 import './courseform.scss';
 
 export function CourseForm(props) {
-    const { tag, courses, courseName, length, setCourseName, setCourses, message, setMessage } = props;
+    const { tag, courses, courseName, length, setCourseName, setCourses, message, setMessage, timetables, setTimetables } = props;
     const getInitialCourseInfo = useCallback(() => {
         return {
             name: courseName,
@@ -79,6 +79,21 @@ export function CourseForm(props) {
             }
         } else {
             delete newCourses[courseName];
+            const newTimetables = JSON.parse(JSON.stringify(timetables));
+            for(const day of Object.keys(newTimetables)){
+                const timetable = newTimetables[day];
+                const newTimetable = {};
+                Object.keys(timetable).forEach((key) => {
+                    if(timetable[key].course !== courseName){
+                        newTimetable[key] = {
+                            course: courseName
+                        }
+                    }
+                });
+                newTimetables[day] = newTimetable
+            }
+            setTimetables(newTimetables);
+            Taro.setStorageSync('timetable-info', JSON.stringify(newTimetables));
             setCourseName('');
         }
         setCourses(newCourses);
@@ -174,7 +189,7 @@ export function CourseForm(props) {
                     }}
                 />
                 <Button style={{ backgroundColor: disabled ? 'grey' : '#6190E8', color: 'white' }} size='default' formType='submit' disabled={disabled} onClick={handleSubmit}>
-                    {tag === 'add' ? '增加' : tag === 'delete' ? '删除' : '更新'}
+                    {tag === 'add' ? '增加' : tag === 'delete' ? '删除以及关联课表' : '更新'}
                 </Button>
             </Form>
         </View>

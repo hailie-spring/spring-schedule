@@ -10,4 +10,5 @@ export default {
 		navigationBarTitleText: "Spring Schedule",
 		navigationBarTextStyle: "black",
 	},
+	"lazyCodeLoading": "requiredComponents"
 };

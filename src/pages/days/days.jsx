@@ -20,6 +20,17 @@ function days(props) {
         setTimelines(generateTodayTimelines(timetables[DAY_OF_WEEK[index]], courses));
     }, [timetables, courses])
 
+    const formatTimetable = useCallback((tag) => {
+        return <TimetableForm
+            current={current}
+            timetables={timetables}
+            setTimetables={setTimetables}
+            courses={courses}
+            dayofweek={DAY_OF_WEEK[index]}
+            keys={Object.keys(timetables[DAY_OF_WEEK[index]])}
+            tag={tag}
+        ></TimetableForm>
+    });
     return (
         <View>
             <CourseTimeline timelines={timelines} note={`这是${DAY_OF_WEEK_CHINESE[index]}课程安排`}></CourseTimeline>
@@ -31,25 +42,12 @@ function days(props) {
                 onClick={(value) => { setCurrent(value) }}
             />
             {
-                current === 0 &&
-                <TimetableForm
-                    timetables={timetables}
-                    setTimetables={setTimetables}
-                    courses={courses}
-                    dayofweek={DAY_OF_WEEK[index]}
-                    tag='update'
-                ></TimetableForm>
-
+                current === 0 && formatTimetable('update')
             }
             {
-                current === 1 && <TimetableForm
-                    timetables={timetables}
-                    setTimetables={setTimetables}
-                    courses={courses}
-                    dayofweek={DAY_OF_WEEK[index]}
-                    tag='delete'
-                ></TimetableForm>
+                current === 1 && formatTimetable('delete')
             }
+
         </View>
     );
 }

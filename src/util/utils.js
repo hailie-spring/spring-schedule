@@ -8,7 +8,7 @@ export function getInitialCourses() {
     } else {
         courses = DEFAULT_COURSES;
     }
-    courses = DEFAULT_COURSES;
+    // courses = DEFAULT_COURSES;
     return courses;
 }
 
@@ -19,18 +19,18 @@ export function getInitialTimetables() {
     } else {
         timetables = DEFAULT_TIMETABLES;
     }
-    timetables = DEFAULT_TIMETABLES;
+    // timetables = DEFAULT_TIMETABLES;
     return timetables;
 }
 
-export function generateTodayTimelines(timetables, courses) {
+export function generateTodayTimelines(timetable, courses) {
     const timelines = [];
-    // console.log(JSON.stringify(timetables));
-    // console.log(JSON.stringify(courses));
-    for (const item of timetables) {
-        const course = courses[item.course]
+    const keys = Object.keys(timetable);
+    keys.sort();
+    for (const key of keys) {
+        const course = courses[timetable[key].course]
         timelines.push({
-            title: item.time,
+            title: key,
             content: [course.name, `时长: ${course.duration}分钟`, `地点: ${course.destination}`]
         });
     }
