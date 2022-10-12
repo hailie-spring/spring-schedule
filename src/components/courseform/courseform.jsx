@@ -17,7 +17,7 @@ export function CourseForm(props) {
         };
     }, [courseName, courses, tag]);
     const [courseInfo, setCourseInfo] = useState(getInitialCourseInfo());
-    const [disabled, setDisabled] = useState(tag === 'add' && length >= 6 ? true : false);
+    const [disabled, setDisabled] = useState(tag === 'add' && length >= 30 ? true : false);
     const prefix = 'course-form';
     useEffect(() => {
         setDisabled(tag === 'add' && length >= 20 ? true : false);
