@@ -13,7 +13,26 @@ Please use weixin to scan the QR Code.
 
 ![QRCode](https://github.com/hailie-spring/spring-schedule/blob/master/materials/spring_schedule_mini_program_code_430.jpg)
 
+# Introduction
+The index page
+
+![image](https://github.com/hailie-spring/spring-schedule/blob/master/materials/index.png)
+
+The timetable page
+
+![image](https://github.com/hailie-spring/spring-schedule/blob/master/materials/timetable.png)
+
+The course page
+
+![image](https://github.com/hailie-spring/spring-schedule/blob/master/materials/course.png)
+
+The sign in page
+
+![image](https://github.com/hailie-spring/spring-schedule/blob/master/materials/signin.png)
+
+
 # Development
 git clone git@github.com:hailie-spring/spring-schedule.git
+
 cd spring-schedule && npm run dev:weapp 
 
