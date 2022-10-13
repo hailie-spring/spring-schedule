@@ -7,3 +7,13 @@ This project provides course timetable management. With it, parents could record
 view, update everyday timetable and sign in. This is a very useful tool and easy to use.
 
 ![Animated demo](https://github.com/hailie-spring/spring-schedule/blob/master/materials/spring%20schedule%20update.gif)
+
+# Try out
+Please use weixin to scan the QR Code.
+
+![QRCode](https://github.com/hailie-spring/spring-schedule/blob/master/materials/spring_schedule_mini_program_code_430.jpg)
+
+# Development
+git clone git@github.com:hailie-spring/spring-schedule.git
+cd spring-schedule && npm run dev:weapp 
+
