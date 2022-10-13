@@ -88,7 +88,7 @@ export const DEFAULT_COURSES = {
     '写字': {
         name: '写字',
         duration: 90, // unit: minutes
-        destination: '九都荟D区',
+        destination: '写字艺术',
         totalTimes: 3,
         consumedTimes: 3,
         paymentTimes: 3
