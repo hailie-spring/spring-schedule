@@ -1,6 +1,7 @@
 # spring-schedule
 
-This project is implemented with taro, taro-ui, react-hooks. 
+This is a weixin miniprogram example.  
+The project is implemented with javascript, taro, taro-ui, react-hooks. 
 Without background service interaction, only use limited client storage, nobody could view the data except yourself.
 Welcome to watch and star ^_^
 
